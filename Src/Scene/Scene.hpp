@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "CommonSFML.hpp"
+#include "CommonImGui.hpp"
 
 class Scene
 {

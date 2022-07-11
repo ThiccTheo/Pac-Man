@@ -146,6 +146,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Entity\Entity.cpp" />
+    <ClCompile Include="Src\StateManager\MenuState\MenuState.cpp" />
     <ClCompile Include="Src\Scene\Scene.cpp" />
     <ClCompile Include="Src\StateManager\GameState\GameState.cpp" />
     <ClCompile Include="Include\ImGui\imgui-SFML.cpp" />
@@ -156,8 +158,11 @@
     <ClCompile Include="Src\ResourceManager\ResourceManager.cpp" />
     <ClCompile Include="Src\Main.cpp" />
     <ClCompile Include="Src\StateManager\StateManager.cpp" />
+    <ClCompile Include="Src\Entity\Wall\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Entity\Entity.hpp" />
+    <ClInclude Include="Src\StateManager\MenuState\MenuState.hpp" />
     <ClInclude Include="Src\Scene\Scene.hpp" />
     <ClInclude Include="Src\StateManager\GameState\GameState.hpp" />
     <ClInclude Include="Include\CommonImGui.hpp" />
@@ -268,6 +273,7 @@
     <ClInclude Include="Include\SFML\Window\WindowStyle.hpp" />
     <ClInclude Include="Src\ResourceManager\ResourceManager.hpp" />
     <ClInclude Include="Src\StateManager\StateManager.hpp" />
+    <ClInclude Include="Src\Entity\Wall\Wall.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Include\SFML\Audio\SoundFileFactory.inl" />

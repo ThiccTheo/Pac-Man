@@ -5,7 +5,7 @@
 
 #include "CommonSFML.hpp"
 
-enum class StateId { gameState, count};
+enum class StateId { menuState, gameState, count};
 
 class StateManager
 {
