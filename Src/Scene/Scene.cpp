@@ -8,6 +8,7 @@ void Scene::init()
 	window.create(sf::VideoMode(896, 1152), "Pac-Man", sf::Style::Close);
 	isFocused = true;
 	window.setVerticalSyncEnabled(true);
+	window.setKeyRepeatEnabled(false);
 
 	ImGui::SFML::Init(window);
 }

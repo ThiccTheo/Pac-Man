@@ -4,7 +4,7 @@
 
 #include "CommonSFML.hpp"
 
-enum class TextureId { count };
+enum class TextureId { wall, player, count };
 enum class ImageId { maze, count };
 
 class ResourceManager

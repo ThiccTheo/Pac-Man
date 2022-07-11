@@ -1,18 +1,52 @@
 #include "Player.hpp"
 #include "../../Scene/Scene.hpp"
+#include "../../ResourceManager/ResourceManager.hpp"
 
 Player Player::player;
-sf::Vector2f Player::movementOffset{10.f, 10.f};
+sf::Vector2f Player::movementOffset{5.f, 5.f};
 
 Player::Player() = default;
 
 Player::Player(const sf::Vector2i& indices) : Entity(indices)
 {
 	normalizedDirection = sf::Vector2i(1, 0);
+	isBlocked.first = false;
+	isBlocked.second = true;
 }
 
-void Player::update()
+void Player::update(const sf::Event& e)
 {
+	switch (e.type)
+	{
+		case sf::Event::KeyPressed:
+			player.lastKeyPressed = e.key.code;
+			break;
+	}
+
+	if (player.lastKeyPressed == sf::Keyboard::W && player.isBlocked.first)
+	{
+		player.normalizedDirection.y = -1;
+		player.normalizedDirection.x = 0;
+		player.isBlocked.second = false;
+	}
+	else if (player.lastKeyPressed == sf::Keyboard::S && player.isBlocked.first)
+	{
+		player.normalizedDirection.y = 1;
+		player.normalizedDirection.x = 0;
+		player.isBlocked.second = false;
+	}
+	else if (player.lastKeyPressed == sf::Keyboard::A && player.isBlocked.second)
+	{
+		player.normalizedDirection.x = -1;
+		player.normalizedDirection.y = 0;
+		player.isBlocked.first = false;
+	}
+	else if (player.lastKeyPressed == sf::Keyboard::D && player.isBlocked.second)
+	{
+		player.normalizedDirection.x = 1;
+		player.normalizedDirection.y = 0;
+		player.isBlocked.first = false;
+	}
 
 
 	player.body.move(movementOffset.x * player.normalizedDirection.x, 0.f);
@@ -24,10 +58,12 @@ void Player::update()
 	{
 		if (player.normalizedDirection.x > 0)
 		{
+			player.isBlocked.first = true;
 			player.body.setPosition(collider->body.getPosition().x - bodySize.x, player.body.getPosition().y);
 		}
 		else if (player.normalizedDirection.x < 0)
 		{
+			player.isBlocked.first = true;
 			player.body.setPosition(collider->body.getPosition().x + bodySize.x, player.body.getPosition().y);
 		}
 	}
@@ -39,10 +75,12 @@ void Player::update()
 	{
 		if (player.normalizedDirection.y > 0)
 		{
+			player.isBlocked.second = true;
 			player.body.setPosition(player.body.getPosition().x, collider->body.getPosition().y - bodySize.y);
 		}
 		else if (player.normalizedDirection.y < 0)
 		{
+			player.isBlocked.second = true;
 			player.body.setPosition(player.body.getPosition().x, collider->body.getPosition().y + bodySize.y);
 		}
 	}
@@ -52,6 +90,7 @@ void Player::draw()
 {
 	sf::VertexArray vertexArray;
 	sf::RenderStates renderStates;
+	renderStates.texture = &ResourceManager::textureMap[TextureId::player];
 
 	vertexArray.setPrimitiveType(sf::Quads);
 	vertexArray.resize(4);
@@ -67,10 +106,41 @@ void Player::draw()
 
 	sf::Vertex* currentQuad{ &vertexArray[quadPtr] };
 
-	for (int i{ 0 }; i < 4; i++)
+	currentQuad[0].position = player.mesh[0];
+	currentQuad[1].position = player.mesh[1];
+	currentQuad[2].position = player.mesh[2];
+	currentQuad[3].position = player.mesh[3];
+	
+	switch (player.normalizedDirection.x)
 	{
-		currentQuad[i].position = player.mesh[i];
-		currentQuad[i].color = sf::Color(255, 255, 0);
+		case 1:
+			currentQuad[0].texCoords = sf::Vector2f(0.f, 0.f);
+			currentQuad[1].texCoords = sf::Vector2f(bodySize.x, 0.f);
+			currentQuad[2].texCoords = sf::Vector2f(bodySize);
+			currentQuad[3].texCoords = sf::Vector2f(0.f, bodySize.x);
+			break;
+		case -1:
+			currentQuad[0].texCoords = sf::Vector2f(bodySize.x, 0.f);
+			currentQuad[1].texCoords = sf::Vector2f(0.f, 0.f);
+			currentQuad[2].texCoords = sf::Vector2f(0.f, bodySize.x);
+			currentQuad[3].texCoords = sf::Vector2f(bodySize);
+			break;
+	}
+
+	switch (player.normalizedDirection.y)
+	{
+		case 1:
+			currentQuad[0].texCoords = sf::Vector2f(0.f, bodySize.x);
+			currentQuad[1].texCoords = sf::Vector2f(0.f, 0.f);
+			currentQuad[2].texCoords = sf::Vector2f(bodySize.x, 0.f);
+			currentQuad[3].texCoords = sf::Vector2f(bodySize);
+			break;
+		case -1:
+			currentQuad[0].texCoords = sf::Vector2f(0.f, 0.f);
+			currentQuad[1].texCoords = sf::Vector2f(0.f, bodySize.x);
+			currentQuad[2].texCoords = sf::Vector2f(bodySize);
+			currentQuad[3].texCoords = sf::Vector2f(bodySize.x, 0.f);
+			break;
 	}
 
 	quadPtr += 4;

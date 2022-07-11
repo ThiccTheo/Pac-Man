@@ -1,5 +1,6 @@
 #include "Wall.hpp"
 #include "../../Scene/Scene.hpp"
+#include "../../ResourceManager/ResourceManager.hpp"
 
 std::vector<Wall> Wall::walls;
 
@@ -9,6 +10,7 @@ void Wall::draw()
 {
 	sf::VertexArray vertexArray;
 	sf::RenderStates renderStates;
+	renderStates.texture = &ResourceManager::textureMap[TextureId::wall];
 
 	vertexArray.setPrimitiveType(sf::Quads);
 	vertexArray.resize(4 * walls.size());
@@ -26,11 +28,15 @@ void Wall::draw()
 
 		sf::Vertex* currentQuad{ &vertexArray[quadPtr] };
 
-		for (int i{ 0 }; i < 4; i++)
-		{
-			currentQuad[i].position = wall.mesh[i];
-			currentQuad[i].color = sf::Color(0, 0, 150);
-		}
+		currentQuad[0].position = wall.mesh[0];
+		currentQuad[1].position = wall.mesh[1];
+		currentQuad[2].position = wall.mesh[2];
+		currentQuad[3].position = wall.mesh[3];
+
+		currentQuad[0].texCoords = sf::Vector2f(0.f, 0.f);
+		currentQuad[1].texCoords = sf::Vector2f(bodySize.x, 0.f);
+		currentQuad[2].texCoords = sf::Vector2f(bodySize);
+		currentQuad[3].texCoords = sf::Vector2f(0.f, bodySize.x);
 
 		quadPtr += 4;
 	}

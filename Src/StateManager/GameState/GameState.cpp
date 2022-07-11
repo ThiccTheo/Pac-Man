@@ -22,7 +22,7 @@ void GameState::run()
 
 		deltaTime = deltaClock.restart().asSeconds();
 
-		Player::update();
+		Player::update(e);
 		Scene::window.clear(sf::Color(0, 0, 0));
 		Wall::draw();
 		Player::draw();
