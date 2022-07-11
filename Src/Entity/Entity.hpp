@@ -14,6 +14,7 @@ public:
 
 	Entity();
 	Entity(const sf::Vector2i& indices);
-	const Entity* collisionHandler(const EntityType entityType);
+	virtual ~Entity();
+	Entity* collisionHandler(const EntityType entityType);
 };
 

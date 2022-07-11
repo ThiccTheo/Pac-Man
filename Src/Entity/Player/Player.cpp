@@ -1,18 +1,21 @@
 #include "Player.hpp"
 #include "../../Scene/Scene.hpp"
 #include "../../ResourceManager/ResourceManager.hpp"
+#include "../Wall/Wall.hpp"
 
 Player Player::player;
-sf::Vector2f Player::movementOffset{5.f, 5.f};
+sf::Vector2f Player::movementOffset{4.f, 4.f};
 
 Player::Player() = default;
 
 Player::Player(const sf::Vector2i& indices) : Entity(indices)
 {
 	normalizedDirection = sf::Vector2i(1, 0);
-	isBlocked.first = false;
-	isBlocked.second = true;
+	onCorner.first = false;
+	onCorner.second = false;
 }
+
+Player::~Player() = default;
 
 void Player::update(const sf::Event& e)
 {
@@ -23,65 +26,77 @@ void Player::update(const sf::Event& e)
 			break;
 	}
 
-	if (player.lastKeyPressed == sf::Keyboard::W && player.isBlocked.first)
+	if (player.lastKeyPressed == sf::Keyboard::W && player.onCorner.first)
 	{
 		player.normalizedDirection.y = -1;
 		player.normalizedDirection.x = 0;
-		player.isBlocked.second = false;
+		player.onCorner.first = false;
 	}
-	else if (player.lastKeyPressed == sf::Keyboard::S && player.isBlocked.first)
+	else if (player.lastKeyPressed == sf::Keyboard::S && player.onCorner.first)
 	{
 		player.normalizedDirection.y = 1;
 		player.normalizedDirection.x = 0;
-		player.isBlocked.second = false;
+		player.onCorner.first = false;
 	}
-	else if (player.lastKeyPressed == sf::Keyboard::A && player.isBlocked.second)
+	else if (player.lastKeyPressed == sf::Keyboard::A && player.onCorner.second)
 	{
 		player.normalizedDirection.x = -1;
 		player.normalizedDirection.y = 0;
-		player.isBlocked.first = false;
+		player.onCorner.second = false;
 	}
-	else if (player.lastKeyPressed == sf::Keyboard::D && player.isBlocked.second)
+	else if (player.lastKeyPressed == sf::Keyboard::D && player.onCorner.second)
 	{
 		player.normalizedDirection.x = 1;
 		player.normalizedDirection.y = 0;
-		player.isBlocked.first = false;
+		player.onCorner.second = false;
 	}
 
 
 	player.body.move(movementOffset.x * player.normalizedDirection.x, 0.f);
 
-	const Entity* collider{ nullptr };
+	Entity* collider{ nullptr };
 
 	collider = player.collisionHandler(EntityType::wall);
-	if (collider != nullptr)
+	if (collider != nullptr && dynamic_cast<Wall*>(collider)->isSolid)
 	{
 		if (player.normalizedDirection.x > 0)
 		{
-			player.isBlocked.first = true;
 			player.body.setPosition(collider->body.getPosition().x - bodySize.x, player.body.getPosition().y);
 		}
 		else if (player.normalizedDirection.x < 0)
 		{
-			player.isBlocked.first = true;
 			player.body.setPosition(collider->body.getPosition().x + bodySize.x, player.body.getPosition().y);
+		}
+	}
+	else if (collider != nullptr && !dynamic_cast<Wall*>(collider)->isSolid)
+	{
+		player.onCorner.first = true;
+		if (player.lastKeyPressed == sf::Keyboard::A || player.lastKeyPressed == sf::Keyboard::D)
+		{
+			player.body.setPosition(collider->body.getPosition());
 		}
 	}
 
 	player.body.move(0.f, movementOffset.y * player.normalizedDirection.y);
 
 	collider = player.collisionHandler(EntityType::wall);
-	if (collider != nullptr)
+	if (collider != nullptr && dynamic_cast<Wall*>(collider)->isSolid)
 	{
 		if (player.normalizedDirection.y > 0)
 		{
-			player.isBlocked.second = true;
 			player.body.setPosition(player.body.getPosition().x, collider->body.getPosition().y - bodySize.y);
 		}
 		else if (player.normalizedDirection.y < 0)
 		{
-			player.isBlocked.second = true;
 			player.body.setPosition(player.body.getPosition().x, collider->body.getPosition().y + bodySize.y);
+		}
+	}
+	else if (collider != nullptr && !dynamic_cast<Wall*>(collider)->isSolid)
+	{
+		player.onCorner.second = true;
+		if (player.lastKeyPressed == sf::Keyboard::W || player.lastKeyPressed == sf::Keyboard::S)
+		{
+			player.body.setPosition(collider->body.getPosition());
 		}
 	}
 }

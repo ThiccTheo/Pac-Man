@@ -12,12 +12,14 @@ Entity::Entity(const sf::Vector2i& indices)
 	body.setPosition(indices.x * bodySize.x, indices.y * bodySize.y);
 }
 
-const Entity* Entity::collisionHandler(const EntityType entityType)
+Entity::~Entity() = default;
+
+Entity* Entity::collisionHandler(const EntityType entityType)
 {
 	switch (entityType)
 	{
 		case EntityType::wall:
-			for (const auto& wall : Wall::walls)
+			for (auto& wall : Wall::walls)
 			{
 				if (body.getGlobalBounds().intersects(wall.body.getGlobalBounds()))
 				{
