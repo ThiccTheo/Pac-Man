@@ -2,6 +2,7 @@
 #include "../../Scene/Scene.hpp"
 #include "../../ResourceManager/ResourceManager.hpp"
 #include "../../Entity/Wall/Wall.hpp"
+#include "../../Entity/Player/Player.hpp"
 
 void GameState::init()
 {
@@ -18,20 +19,13 @@ void GameState::run()
 	while (Scene::window.isOpen())
 	{
 		const sf::Event& e{ eventHandler() };
-		//ImGui::SFML::ProcessEvent(e);
 
 		deltaTime = deltaClock.restart().asSeconds();
 
-		//ImGui::SFML::Update(Scene::window, sf::seconds(deltaTime));
-
-		/*ImGui::Begin("Window");
-		ImGui::ColorPicker3("Window Color", color);
-		ImGui::End();*/
-
-		//Scene::window.clear(sf::Color(color[0] * 255.f, color[1] * 255.f, color[2] * 255.f));
-		Scene::window.clear(sf::Color(15, 15, 30));
+		Player::update();
+		Scene::window.clear(sf::Color(0, 0, 0));
 		Wall::draw();
-		//ImGui::SFML::Render(Scene::window);
+		Player::draw();
 		Scene::window.display();
 	}
 }
@@ -52,8 +46,11 @@ void GameState::loadLevel()
 			{
 				Wall::walls.emplace_back(sf::Vector2i(x, y));
 			}
+			else if (color == sf::Color(255, 255, 0))
+			{
+				Player player(sf::Vector2i(x, y));
+				Player::player = player;
+			}
 		}
 	}
-
-	std::cout << Wall::walls.size();
 }

@@ -29,7 +29,7 @@ void Wall::draw()
 		for (int i{ 0 }; i < 4; i++)
 		{
 			currentQuad[i].position = wall.mesh[i];
-			currentQuad[i].color = sf::Color::Red; //temp
+			currentQuad[i].color = sf::Color(0, 0, 150);
 		}
 
 		quadPtr += 4;

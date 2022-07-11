@@ -3,6 +3,8 @@
 
 #include "CommonSFML.hpp"
 
+enum class EntityType{ player, wall, count };
+
 class Entity
 {
 public:
@@ -10,6 +12,8 @@ public:
 	sf::RectangleShape body;
 	static const sf::Vector2f bodySize;
 
+	Entity();
 	Entity(const sf::Vector2i& indices);
+	const Entity* collisionHandler(const EntityType entityType);
 };
 
