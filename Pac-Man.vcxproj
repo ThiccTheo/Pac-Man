@@ -146,6 +146,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Scene\Scene.cpp" />
+    <ClCompile Include="Src\StateManager\GameState\GameState.cpp" />
     <ClCompile Include="Include\ImGui\imgui-SFML.cpp" />
     <ClCompile Include="Include\ImGui\imgui.cpp" />
     <ClCompile Include="Include\ImGui\imgui_draw.cpp" />
@@ -153,8 +155,11 @@
     <ClCompile Include="Include\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Src\ResourceManager\ResourceManager.cpp" />
     <ClCompile Include="Src\Main.cpp" />
+    <ClCompile Include="Src\StateManager\StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Scene\Scene.hpp" />
+    <ClInclude Include="Src\StateManager\GameState\GameState.hpp" />
     <ClInclude Include="Include\CommonImGui.hpp" />
     <ClInclude Include="Include\CommonSFML.hpp" />
     <ClInclude Include="Include\ImGui\imconfig-SFML.h" />
@@ -262,6 +267,7 @@
     <ClInclude Include="Include\SFML\Window\WindowHandle.hpp" />
     <ClInclude Include="Include\SFML\Window\WindowStyle.hpp" />
     <ClInclude Include="Src\ResourceManager\ResourceManager.hpp" />
+    <ClInclude Include="Src\StateManager\StateManager.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Include\SFML\Audio\SoundFileFactory.inl" />

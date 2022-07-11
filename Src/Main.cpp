@@ -1,7 +1,19 @@
 #include <iostream>
 
+#include "ResourceManager/ResourceManager.hpp"
+#include "Scene/Scene.hpp"
+#include "StateManager/StateManager.hpp"
+
 int main()
 {
-	std::cout << "hello world!\n";
-	return EXIT_SUCCESS;
+	if (ResourceManager::load())
+	{
+		Scene::init();
+		StateManager::addState(StateId::gameState);
+		return EXIT_SUCCESS;
+	}
+	else
+	{
+		return EXIT_FAILURE;
+	}
 }
