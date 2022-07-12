@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "Pellet.hpp"
 #include "../../ResourceManager/ResourceManager.hpp"
 #include "../../Scene/Scene.hpp"
@@ -11,6 +13,14 @@ Pellet::~Pellet() = default;
 
 void Pellet::update()
 {
+	for (auto& pellet : pellets)
+	{
+		pellets.erase(std::remove_if(pellets.begin(), pellets.end(),
+			[](Pellet& temp)
+			{
+				return temp.collisionHandler(EntityType::player) != nullptr;
+			}), pellets.end());
+	}
 }
 
 void Pellet::draw()

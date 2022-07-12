@@ -47,6 +47,9 @@ void GameState::loadLevel()
 	Wall::walls.clear();
 	Wall::walls.reserve(548);
 
+	Pellet::pellets.clear();
+	Pellet::pellets.reserve(244);
+
 	for (unsigned int y{ 0 }; y < maze.getSize().y; y++)
 	{
 		for (unsigned int x{ 0 }; x < maze.getSize().x; x++)
