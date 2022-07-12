@@ -3,7 +3,7 @@
 
 #include "CommonSFML.hpp"
 
-enum class EntityType{ player, wall, count };
+enum class EntityType{ player, wall, pellet, count };
 
 class Entity
 {

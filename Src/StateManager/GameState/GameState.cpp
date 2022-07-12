@@ -3,6 +3,7 @@
 #include "../../ResourceManager/ResourceManager.hpp"
 #include "../../Entity/Wall/Wall.hpp"
 #include "../../Entity/Player/Player.hpp"
+#include "../../Entity/Pellet/Pellet.hpp"
 
 void GameState::init()
 {
@@ -20,12 +21,22 @@ void GameState::run()
 	{
 		const sf::Event& e{ eventHandler() };
 
+		//ImGui::SFML::ProcessEvent(e);
+
 		deltaTime = deltaClock.restart().asSeconds();
 
+		//ImGui::SFML::Update(Scene::window, sf::seconds(deltaTime));
+
+		//ImGui::ColorEdit3("Clear Color", color);
+
 		Player::update(e);
-		Scene::window.clear(sf::Color(0, 0, 0));
+		Pellet::update();
+		//Scene::window.clear(sf::Color(color[0] * 255, color[1] * 255, color[2] * 255));
+		Scene::window.clear(sf::Color(0, 95, 140));
 		Wall::draw();
+		Pellet::draw();
 		Player::draw();
+		//ImGui::SFML::Render(Scene::window);
 		Scene::window.display();
 	}
 }
@@ -50,6 +61,14 @@ void GameState::loadLevel()
 			{
 				Player player(sf::Vector2i(x, y));
 				Player::player = player;
+			}
+			else if (color == sf::Color(255, 255, 255))
+			{
+				Pellet::pellets.emplace_back(sf::Vector2i(x, y), PelletSize::small);
+			}
+			else if (color == sf::Color(255, 0, 0))
+			{
+				Pellet::pellets.emplace_back(sf::Vector2i(x, y), PelletSize::large);
 			}
 		}
 	}

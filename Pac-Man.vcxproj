@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Entity\Pellet\Pellet.cpp" />
     <ClCompile Include="Src\Entity\Player\Player.cpp" />
     <ClCompile Include="Src\Entity\Entity.cpp" />
     <ClCompile Include="Src\StateManager\MenuState\MenuState.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="Src\Entity\Wall\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Entity\Pellet\Pellet.hpp" />
     <ClInclude Include="Src\Entity\Player\Player.hpp" />
     <ClInclude Include="Src\Entity\Entity.hpp" />
     <ClInclude Include="Src\StateManager\MenuState\MenuState.hpp" />

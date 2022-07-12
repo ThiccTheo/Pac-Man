@@ -8,5 +8,6 @@ bool ResourceManager::load()
 	return
 		imageMap[ImageId::maze].loadFromFile("Data/Images/Maze.png") &&
 		textureMap[TextureId::wall].loadFromFile("Data/Textures/Wall.png") &&
-		textureMap[TextureId::player].loadFromFile("Data/Textures/Player.png");
+		textureMap[TextureId::player].loadFromFile("Data/Textures/Player.png") &&
+		textureMap[TextureId::pellet].loadFromFile("Data/Textures/Pellet.png");
 }

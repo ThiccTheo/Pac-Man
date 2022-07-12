@@ -188,16 +188,16 @@ void Player::draw()
 	switch (player.normalizedDirection.y)
 	{
 	case 1:
-		currentQuad[0].texCoords = sf::Vector2f(0.f, bodySize.x);
-		currentQuad[1].texCoords = sf::Vector2f(0.f, 0.f);
-		currentQuad[2].texCoords = sf::Vector2f(bodySize.x, 0.f);
-		currentQuad[3].texCoords = sf::Vector2f(bodySize);
-		break;
-	case -1:
 		currentQuad[0].texCoords = sf::Vector2f(0.f, 0.f);
 		currentQuad[1].texCoords = sf::Vector2f(0.f, bodySize.x);
 		currentQuad[2].texCoords = sf::Vector2f(bodySize);
 		currentQuad[3].texCoords = sf::Vector2f(bodySize.x, 0.f);
+		break;
+	case -1:
+		currentQuad[3].texCoords = sf::Vector2f(0.f, bodySize.x);
+		currentQuad[2].texCoords = sf::Vector2f(0.f, 0.f);
+		currentQuad[1].texCoords = sf::Vector2f(bodySize.x, 0.f);
+		currentQuad[0].texCoords = sf::Vector2f(bodySize);
 		break;
 	}
 
