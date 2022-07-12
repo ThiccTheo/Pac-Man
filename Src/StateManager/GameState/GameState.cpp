@@ -44,11 +44,7 @@ void GameState::loadLevel()
 
 			if (color == sf::Color(0, 0, 0))
 			{
-				Wall::walls.emplace_back(sf::Vector2i(x, y), true);
-			}
-			else if (color == sf::Color(0, 255, 0))
-			{
-				Wall::walls.emplace_back(sf::Vector2i(x, y), false);
+				Wall::walls.emplace_back(sf::Vector2i(x, y));
 			}
 			else if (color == sf::Color(255, 255, 0))
 			{

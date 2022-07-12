@@ -20,6 +20,5 @@ private:
 	sf::Vector2i normalizedDirection;
 	static sf::Vector2f movementOffset;
 	sf::Keyboard::Key lastKeyPressed;
-	std::pair<bool, bool> onCorner;
 };
 
